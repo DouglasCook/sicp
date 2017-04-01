@@ -8,7 +8,6 @@
   (* x x x))
 
 
-; with improved good enough check
 (define (cube-root x)
 
   (define (cube-iter guess previous-guess)
