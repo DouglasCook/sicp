@@ -8,15 +8,13 @@
                  (* 2 (recursive (- n 2)))
                  (* 3 (recursive (- n 3)))))))
 
-(define (iter i n n-1 n-2 n-3)
-  (cond ((< n 3) 1)
-        ((= i n) (+ n-1 (* 2 n-2) (* 3 n-3)))
-        ((= i 2) (iter 3 n 1 1 1))
-        (else (iter (+ i 1)
-                    n
-                    (+ n-1 (* 2 n-2) (* 3 n-3))
-                    n-1
-                    n-2))))
 
 (define (iterative n)
-  (iter 2 n 1 0 0))
+
+  (define (iter i n-1 n-2 n-3)
+    (define total (+ n-1 (* 2 n-2) (* 3 n-3)))
+    (cond ((= i n) total)
+          (else (iter (+ i 1) total n-1 n-2))))
+
+  (cond ((< n 3) 1)
+        (else (iter 3 1 1 1))))
