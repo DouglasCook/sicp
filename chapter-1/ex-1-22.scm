@@ -6,6 +6,8 @@
 (define (smallest-divisor n)
   (find-divisor n 2))
 
+; Exercise 1.23 - Optimise find-divisor by only checking odd numbers after 2
+
 (define (find-divisor n test-divisor)
   (define (next)
     (if (= test-divisor 2)
