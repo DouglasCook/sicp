@@ -27,3 +27,16 @@
   (define (multiply-them x y)
     (* x y))
   (accumulate multiply-them term a next b 1))
+
+
+; Exercise 1.33
+; Define a procedure that can also filter out the terms to consider
+
+(define (filtered-accumulate combiner term a next b valid-term? null-value)
+  (define (iter a result)
+    (cond ((> a b) result)
+          ((valid-term? a)
+            (iter (next a) (combiner (term a) result)))
+          (else
+            (iter (next a) (combiner null-value result)))))
+  (iter a null-value))
