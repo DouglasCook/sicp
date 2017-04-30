@@ -1,7 +1,7 @@
 (define (inc x)
   (+ x 1))
 
-; Exercise 1.30
+; Exercise 1.31
 ; Define a procedure analogous to sum to compute products
 ; Use it to define factorial and an approximation to pi using a method by John Wallis
 
