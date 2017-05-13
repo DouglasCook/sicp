@@ -35,3 +35,33 @@
 
 (define (n-fold-smooth f n)
   (repeated smooth n))
+
+
+; Exercise 1.45
+; Write a procedure to compute nth roots as fixed points of x -> x/y^(n-1) by
+; applying repeated average damping as necessary
+
+; TODO is it possible to import things from other modules?
+(define (fixed-point f first-guess)
+  (define tolerance 0.00001)
+  (define (close-enough? v1 v2)
+    (< (abs (- v1 v2)) tolerance))
+  (define (try guess)
+    (let ((next (f guess)))
+     (if (close-enough? guess next)
+         next
+         (try next))))
+  (try first-guess))
+
+(define (average-damp f)
+  (lambda (x)
+    (/ (+ x (f x))
+       2)))
+
+(define (nth-root n x)
+  (let ((damp-repeats 2)) ; TODO calculate this based on n
+   (fixed-point
+     ((repeated average-damp damp-repeats)
+      (lambda (y) (/ x
+                     (expt y (- n 1)))))
+     1.0)))
