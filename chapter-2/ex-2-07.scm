@@ -9,7 +9,7 @@
                  (+ (upper-bound x) (upper-bound y))))
 
 ; Find the min and max of all bound-pairs to form the product
-(define (multiply-interval x y)
+(define (multiply-interval-original x y)
   (let ((p1 (* (lower-bound x) (lower-bound y)))
         (p2 (* (lower-bound x) (upper-bound y)))
         (p3 (* (upper-bound x) (lower-bound y)))
@@ -19,7 +19,7 @@
 
 ; Multiply one interval by the reciprocal of the other, the bounds of the
 ; reciprocal are reversed ie upper then lower bound
-(define (divide-interval x y)
+(define (divide-interval-original x y)
   (multiply-interval x
                      (make-interval (/ 1.0 (upper-bound y))
                                     (/ 1.0 (lower-bound y)))))
@@ -45,3 +45,17 @@
 (define (subtract-interval a b)
   (make-interval (- (lower-bound a) (upper-bound b))
                  (- (upper-bound a) (lower-bound b))))
+
+
+; Exercise 2.10
+; Modify the procedure for division to raise an error if trying to divide by zero
+(define (divide-interval x y)
+  (define zero-denominator?
+    (<= (* (lower-bound y)
+           (upper-bound y))
+        0))
+  (if zero-denominator?
+      (error "Cannot divide by an interval containing zero")
+      (multiply-interval x
+                         (make-interval (/ 1.0 (upper-bound y))
+                                        (/ 1.0 (lower-bound y))))))
