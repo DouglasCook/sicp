@@ -75,12 +75,14 @@
         (lower-x-neg (negative? (lower-bound x)))
         (upper-x-pos (positive? (upper-bound x)))
         (upper-x-neg (negative? (upper-bound x)))
+
         (lower-y (lower-bound y))
         (upper-y (upper-bound y))
         (lower-y-pos (positive? (lower-bound y)))
         (lower-y-neg (negative? (lower-bound y)))
         (upper-y-pos (positive? (upper-bound y)))
         (upper-y-neg (negative? (upper-bound y))))
+
   (cond ((and lower-x-pos upper-x-pos
               lower-y-pos upper-y-pos)
          (make-interval (* lower-x lower-y)
@@ -119,3 +121,31 @@
                              (* lower-x upper-y))
                         (max (* upper-x upper-y)
                              (* lower-x lower-y)))))))
+
+
+; Updated version to allow intervals to be specified as a centre value and
+; a tolerance
+(define (make-center-width c w)
+  (make-interval (- c w) (+ c w)))
+
+(define (center interval)
+  (/ (+ (lower-bound interval) (upper-bound interval))
+     2))
+
+(define (width interval)
+  (/ (- (upper-bound interval) (lower-bound interval))
+     2))
+
+
+; Exercise 2.12
+; Define a constructor to produce intervals given a centre and a percentage
+; tolerance
+
+(define (make-interval-with-tolerance centre tolerance)
+  (let ((width (/ (* centre tolerance)
+                  100)))
+   (make-interval (- centre width) (+ centre width))))
+
+(define (tolerance interval)
+  (* 100 (/ (width interval)
+            (center interval))))
