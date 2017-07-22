@@ -3,17 +3,14 @@
 ; arguments with same even/odd parity as the first argument
 
 (define (same-parity first . rest)
-  (let ((parity-check (if (odd? first) odd? even?)))
-
-   (define (valid-or-none element)
-     (if (parity-check element)
-        (list element)
-        (list)))
+  (let ((matching-parity? (if (odd? first) odd? even?)))
 
    (define (filter-elements elements)
-     (if (null? (cdr elements))
-         (valid-or-none (car elements))
-         (append (valid-or-none (car elements))
-                 (filter-elements (cdr elements)))))
+     (cond ((null? elements)
+            nil)
+           ((matching-parity? (car elements))
+            (append (list (car elements)) (filter-elements (cdr elements))))
+           (else
+             (filter-elements (cdr elements)))))
 
    (append (list first) (filter-elements rest))))
