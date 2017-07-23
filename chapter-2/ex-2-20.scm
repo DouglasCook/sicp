@@ -9,8 +9,8 @@
      (cond ((null? elements)
             nil)
            ((matching-parity? (car elements))
-            (append (list (car elements)) (filter-elements (cdr elements))))
+            (cons (car elements) (filter-elements (cdr elements))))
            (else
              (filter-elements (cdr elements)))))
 
-   (append (list first) (filter-elements rest))))
+   (cons first (filter-elements rest))))
