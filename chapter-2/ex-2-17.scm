@@ -16,4 +16,5 @@
 (define (reverse-recursive l)
   (if (null? (cdr l))
       l
-      (append (reverse-recursive (cdr l)) (list (car l)))))
+      (append (reverse-recursive (cdr l))
+              (list (car l)))))
