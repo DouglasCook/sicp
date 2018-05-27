@@ -9,7 +9,10 @@
   (cond ((not (pair? l)) l)
         ((pair? (car l))
          (append (deep-reverse (cdr l))
-                 (deep-reverse (car l))))
+                 ; if car is a pair then append will concatenate its contents
+                 ; instead of keeping the nested structure, so we need to wrap
+                 ; it in a list
+                 (list (deep-reverse (car l)))))
         (else
          (append (deep-reverse (cdr l))
                  (list (car l))))))
